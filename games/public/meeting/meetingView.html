@@ -1,4 +1,24 @@
-<h2>Meeting View</h2>
-<div>
-    <span>Meeting id is:</span><span>{{id}}</span>
+<div class="meeting-background">
+    <div>
+        <span>Meeting id is:</span><span>{{id}}</span>
+    </div>
+
+    <div>
+        <span>{{text}}</span>
+    </div>
+
+    <div>
+        <div class="list-group" ng-show="items.length > 0">
+            <a class="list-group-item" ng-repeat="item in items" ng-click="handleChoose(item)">{{textFromItem(item)}}</a>
+        </div>
+    </div>
+
+    <div class="meeting-bottom-bar">
+        <button class="btn btn-default" ng-click="conversationPlayer.handleRecord()">
+            Collect
+        </button>
+        <button class="btn btn-primary pull-right" ng-click="handleNext()">
+            Next
+        </button>
+    </div>
 </div>

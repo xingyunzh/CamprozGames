@@ -17,4 +17,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function ($stateProvider, $u
         templateUrl: "meeting/meetingView.html",
         controller: "meetingController"
     })
+}]).run(["$rootScope", function($rootScope){
+    $rootScope.navBar = {
+        title:"CamproZ",
+        left:null,
+        right:null
+    };
 }]);
