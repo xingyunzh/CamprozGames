@@ -2,17 +2,14 @@
  * Created by admin on 26/04/17.
  */
 app.service("conversationPlayer", ["$interval", function($interval){
-    this.state = "ready";
-    this.sceneData = null;
-    this.frameAction = null;
-    this.seq = 0;
-    this.userData = {people:[], records:[], choice:[], quiz:[]};
-    this.text = "Ready";
-
-    this.isPlaying = function(){
-        return this.state != "ready";
+    this.reset = function(){
+        this.state = "ready";
+        this.sceneData = null;
+        this.frameAction = null;
+        this.seq = 0;
+        this.userData = {people:[], records:[], choice:[], quiz:[]};
+        this.text = "Ready";
     };
-
 //    this.timer = null;
 //
 //    this.play = function(scene, doFrame){
@@ -53,7 +50,14 @@ app.service("conversationPlayer", ["$interval", function($interval){
 //        that.timer = null;
 //    }
 
+    this.isEnd = function(){
+        return this.seq == 1000;
+    };
+
     this.next = function(){
+        if(this.seq == 0){
+            this.seq = 1;
+        }
         return eatSequence(this);
     };
 
@@ -72,13 +76,22 @@ app.service("conversationPlayer", ["$interval", function($interval){
     };
 
     function eatSequence(that){
-        var index = that.seq;
-        var json = JSON.parse(that.sceneData);
-        var seqs = json.script;
-        var sentence = seqs[index];
+        var seqs = that.sceneData.script;
+        var sentence = null;
+
+        console.log("seq = " + that.seq);
+        for(var i = 0; i < seqs.length; i++){
+            if(seqs[i].seq == that.seq) {
+                sentence = seqs[i];
+                break;
+            }
+        }
+
         if(sentence == null){
             console.log("user data = " + JSON.stringify(that.userData));
-            return "Over";
+            var msg = that.seq == 999 ? "Game Over" : "Success End";
+            that.seq = 1000;
+            return msg;
         }
 
         var ret = checker(sentence, that.userData);
@@ -96,7 +109,15 @@ app.service("conversationPlayer", ["$interval", function($interval){
             return ret; //options
         }
         else {
-            that.seq += 1;
+            if(sentence.end == 1){
+                that.seq = 999;
+            }
+            else if (sentence.end == 8){
+                that.seq = 888;
+            }
+            else {
+                that.seq += 1;
+            }
             return that.textFromItem(ret);
         }
     }
@@ -125,6 +146,17 @@ app.service("conversationPlayer", ["$interval", function($interval){
         else if (sentence.branch == "choose"){
             return sentence.options;
         }
+        else if (sentence.condition && sentence.condition.type == "people"){
+            var contents = sentence.condition.contents;
+            for(var i = 0; i < contents.length; i++){
+                var item = contents[i];
+                if(userData.people.includes(item.name)){
+                    sentence.say += item.piece;
+                }
+            }
+
+            return sentence;
+        }
         else {
             return sentence;
         }
@@ -139,4 +171,5 @@ app.service("conversationPlayer", ["$interval", function($interval){
         }
     }
 
+    this.reset();
 }]);

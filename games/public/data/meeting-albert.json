@@ -21,23 +21,28 @@
         },
         {
             "name":"Philip",
-            "role":"Project Manager"
+            "role":"Project Manager",
+            "selectable":1
         },
         {
             "name":"Amy",
-            "role":"Architect"
+            "role":"Architect",
+            "selectable":1
         },
         {
             "name":"Dick",
-            "role":"Engineer"
+            "role":"Web Engineer",
+            "selectable":1
         },
         {
             "name":"Dean",
-            "role":"Engineer"
+            "role":"Sever Engineer",
+            "selectable":1
         },
         {
             "name":"Terry",
-            "role":"Tester"
+            "role":"Tester",
+            "selectable":1
         }
     ],
     "script":[
@@ -67,11 +72,28 @@
             "say":"请允许我介绍,",
             "condition":{
                 "type":"people",
-                "Philip":"Philip是我们的项目经理",
-                "Amy":"Amy是我们的架构师",
-                "Dean":"Dean是研发工程师",
-                "Dick":"Dick是研发工程师",
-                "Terry":"Terry是我们的测试工程师"
+                "contents":[
+                    {
+                        "name":"Philip",
+                        "piece":" Philip是我们的项目经理"
+                    },
+                    {
+                        "name":"Amy",
+                        "piece":" Amy是我们的架构师"
+                    },
+                    {
+                        "name":"Dean",
+                        "piece":" Dean是研发工程师"
+                    },
+                    {
+                        "name":"Dick",
+                        "piece":" Dick是研发工程师"
+                    },
+                    {
+                        "name":"Terry",
+                        "piece":" Terry是我们的测试工程师"
+                    }
+                ]
             }
         },
         {
@@ -135,15 +157,18 @@
             "branch":"choose",
             "options":[
                 {
-                    "Philip":"麻烦请您细说一下关于互联网和VR的部分，您期待如何使用这个系统呢?",
+                    "who":"Philip",
+                    "say":"麻烦请您细说一下关于互联网和VR的部分，您期待如何使用这个系统呢?",
                     "go":18
                 },
                 {
-                    "Philip":"麻烦详细说下纸质名片电子化功能，希望具体电子化到什么程度，什么数据格式呢？",
+                    "who":"Philip",
+                    "say":"麻烦详细说下纸质名片电子化功能，希望具体电子化到什么程度，什么数据格式呢？",
                     "go":16
                 },
                 {
-                    "Philip":"商务数据分析这块，我们也很在行，您们希望做哪些方面的分析呢？",
+                    "who":"Philip",
+                    "say":"商务数据分析这块，我们也很在行，您们希望做哪些方面的分析呢？",
                     "go":17
                 }
             ]
@@ -183,7 +208,7 @@
             "branch":"exist",
             "people": [
                 {
-                    "name:": "Amy",
+                    "name": "Amy",
                     "go": 30
                 },
                 {
@@ -352,7 +377,7 @@
             "seq":40,
             "who":"Sam",
             "say":"谢谢你们的时间，后续的进展我们随时保持联系，再见！",
-            "end":1
+            "end":8
         }
     ],
     "quiz":{
@@ -398,27 +423,5 @@
                 "truth":0
             }
         ]
-
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
