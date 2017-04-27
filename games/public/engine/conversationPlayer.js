@@ -68,7 +68,7 @@ app.service("conversationPlayer", ["$interval", function($interval){
     };
 
     this.handleRecord = function() {
-        if(this.userData.records.contain(this.seq)){
+        if(this.userData.records.includes(this.seq)){
            return;
         }
 

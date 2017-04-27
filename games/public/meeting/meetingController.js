@@ -23,21 +23,25 @@ app.controller("meetingController", ["$scope", "$rootScope", "$stateParams", "co
             });
         };
 
-        $scope.handleNext = function(){
-            var ret = conversationPlayer.next();
+        $scope.updateUI = function(ret){
             if(angular.isArray(ret)){
                 $scope.items = ret;
-                $scope.text = "分支";
+                $scope.text = "请选择：";
             }
             else {
                 $scope.items = null;
                 $scope.text = ret;
             }
+        }
+
+        $scope.handleNext = function(){
+            var ret = conversationPlayer.next();
+            $scope.updateUI(ret);
         };
 
         $scope.handleChoose = function(item){
-            conversationPlayer.handleChoose(item);
-            $scope.handleNext();
+            var ret = conversationPlayer.handleChoose(item);
+            $scope.updateUI(ret);
         };
 
         $scope.handleCandidate = function(cand){
