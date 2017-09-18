@@ -14,13 +14,25 @@ app.controller("meetingController", ["$scope", "$rootScope", "$stateParams", "co
             $scope.candidatePeople = null;
             $scope.player.reset();
 
-            $http.get("/data/meeting-albert.json").then(function(response){
+            var path = location.pathname;
+            var dataPath = "data/meeting-albert.json";
+            path.endsWith("/") ? path += dataPath : path += "/" + dataPath;
+
+            $http.get(path).then(function(response){
                 conversationPlayer.sceneData = response.data;
                 $scope.candidatePeople = response.data.people;
                 $scope.text = "请选择我方参与角色";
             }).catch(function(response){
                 $scope.text = "load file error:" + response.statusText;
             });
+        };
+
+        $scope.backgroundForCand = function(cand) {
+            if(cand.required) {
+                return '#666666'
+            }
+
+            return $scope.player.userData.people.includes(cand.name) ? 'rgb(241,196,15)' : '#ffffff'
         };
 
         $scope.updateUI = function(ret){
@@ -56,7 +68,7 @@ app.controller("meetingController", ["$scope", "$rootScope", "$stateParams", "co
             else {
                 conversationPlayer.userData.people.push(cand.name);
             }
-        }
+        };
 
         $scope.reset();
 

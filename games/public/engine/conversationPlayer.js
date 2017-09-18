@@ -51,7 +51,7 @@ app.service("conversationPlayer", ["$interval", function($interval){
 //    }
 
     this.isEnd = function(){
-        return this.seq == 1000;
+        return this.seq > 999;
     };
 
     this.next = function(){
@@ -89,8 +89,19 @@ app.service("conversationPlayer", ["$interval", function($interval){
 
         if(sentence == null){
             console.log("user data = " + JSON.stringify(that.userData));
-            var msg = that.seq == 999 ? "Game Over" : "Success End";
-            that.seq = 1000;
+            var msg = "";
+            if(that.seq == 999 || that.seq == 1000) {
+                msg = "Game Over";
+                that.seq = 1000;
+            }
+            else if (that.seq == 888 || that.seq == 1002) {
+                msg = "Success End";
+                that.seq = 1002;
+            }
+            else {
+                assert(false, "seq is out of bounds");
+            }
+
             return msg;
         }
 
@@ -164,7 +175,7 @@ app.service("conversationPlayer", ["$interval", function($interval){
 
     this.textFromItem = function(item){
         if(item.who && item.say){
-            return item.who + ":" + item.say;
+            return item.who + ": " + item.say;
         }
         else {
             return null;

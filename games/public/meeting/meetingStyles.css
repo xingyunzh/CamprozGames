@@ -11,3 +11,8 @@
     width: 50%;
     border-radius: 0px;
 }
+
+.meeting-conversation-text {
+    font-size: large;
+    color: #000000;
+}

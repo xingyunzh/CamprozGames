@@ -55,7 +55,7 @@
 		}
 
 		return false;
-	}
+	};
 
 	util.stringFromEnumMethod = function(st) {
 		if (!isNaN(st)) {
@@ -68,7 +68,7 @@
 		}
 
 		return "Not a valid state";
-	}
+	};
 
 	return util;
 }));
